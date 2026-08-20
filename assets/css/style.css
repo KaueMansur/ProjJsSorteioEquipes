@@ -1,0 +1,31 @@
+*{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
+html{
+    background-color: bisque;
+}
+
+.li_equipe{
+    width: 150px;
+    height: 200px;
+    border: 2px solid #000;
+    background-color: #0002;
+}
+
+#menu_edicao_equipe{
+    width: 300px;
+    height: 400px;
+    border: 2px solid #000;
+    background-color: #ddc6aa;
+    position: absolute;
+    left: calc(50% - 150px);
+    top: calc(50% - 200px);
+}
+
+.desativado{
+    display: none;
+}

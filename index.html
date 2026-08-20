@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <title>Sorteio equipes</title>
+</head>
+
+<body>
+    <section id="participantes_section">
+        <label for="nome_participante">Nome do participante:</label>
+        <input type="text" id="nome_participante" value="Kauê">
+        <button id="btn_adicionar_participante">Adicionar participante</button>
+        <div>
+            <label for="limite_participantes">Limite de participantes</label>
+            <input type="number" id="limite_participantes" disabled>
+            <input type="checkbox" id="limite_participantes_checkbox">
+        </div>
+        <ul id="lista_participantes"></ul>
+    </section>
+    <section id="equipe_section">
+        <label for="quantidade_equipes">Quantidade de equipes:</label>
+        <input type="number" id="quantidade_equipes">
+        <label for="quantidade_participantes_por_equipe">Quantidade participantes por equipe:</label>
+        <input type="number" id="quantidade_participantes_por_equipe">
+        <ul id="container_equipes" style="display: flex; flex-wrap: wrap;"></ul>
+    </section>
+    <article id="menu_edicao_equipe" class="desativado">
+        <input type="color" id="input_cor_equipe_em_edicao">
+        <input type="text" id="nome_equipe_em_edicao">
+        <ul id="ul_partcipantes_equipe_em_edicao"></ul>
+        <button id="btn_salvar_edicao">Salvar</button>
+    </article>
+    <button id="btn_definir_configuracoes_equipe">Definir Configurações de equipe</button>
+    <script src="assets/js/script.js"></script>
+</body>
+</html>
