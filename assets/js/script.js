@@ -1,6 +1,8 @@
 const nomeParticipanteInput = document.getElementById("nome_participante");
 const quantidadeEquipesInput = document.getElementById("quantidade_equipes");
+const quantidadeEquipesSpan = document.getElementById("quantidade_equipes_span");
 const quantidadeParticipantesPorEquipeInput = document.getElementById("quantidade_participantes_por_equipe");
+const quantidadeParticipantes = document.getElementById("quantidade_participantes");
 
 const limiteParticipanteCheckbox = document.getElementById("limite_participantes_checkbox");
 const limiteParticipantesInput = document.getElementById("limite_participantes");
@@ -29,6 +31,7 @@ let limiteParticipantes = null;
 let quantidadeEquipes = 0;
 
 let contagemParticipantes = 0;
+let idAtual = 0;
 
 function definirConfiguracoesDeEquipe() {
     definirQuantidadeEquipes();
@@ -39,22 +42,28 @@ function adicionarParticipante() {
         limiteParticipantes = limiteParticipantesInput.value;
     }
     if (participantes.length < limiteParticipantes || limiteParticipantes == null) {
+        idAtual++;
         contagemParticipantes++;
         const nomeParticipante = nomeParticipanteInput.value
         participantes.push(nomeParticipante);
-        idsParticipantes.push(contagemParticipantes);
+        idsParticipantes.push(idAtual);
         // console.log(participantes)
 
         const liParticipante = document.createElement("li");
         liParticipante.innerText = nomeParticipante;
-        liParticipante.id = "participante_" + contagemParticipantes;
+        liParticipante.id = "participante_" + idAtual;
+        liParticipante.classList.add("participante_li")
         listaParticipante.appendChild(liParticipante);
 
         const btnExcluirParticipante = document.createElement("button");
-        btnExcluirParticipante.innerText = "Excluir";
+        const lixoImg = document.createElement("img");
+        lixoImg.src = "../assets/img/icons/lata-de-lixo.png";
+        btnExcluirParticipante.appendChild(lixoImg);
         btnExcluirParticipante.classList.add("btn_excluir_participante");
-        btnExcluirParticipante.id = "btn_excluir_participante_" + contagemParticipantes;
+        btnExcluirParticipante.id = "btn_excluir_participante_" + idAtual;
         liParticipante.appendChild(btnExcluirParticipante);
+
+        quantidadeParticipantes.innerText = contagemParticipantes;
 
         nomeParticipanteInput.value = "";
         nomeParticipanteInput.focus();
@@ -71,6 +80,10 @@ function excluirParticipante(idParticipante) {
     idsParticipantes.splice(i, 1);
     participantes.splice(i, 1);
 
+    contagemParticipantes--;
+
+    quantidadeParticipantes.innerText = contagemParticipantes;
+
     document.getElementById("participante_" + idParticipante).remove();
 
     // console.log(participantes);
@@ -85,27 +98,40 @@ function definirQuantidadeEquipes() {
         liEquipe.id = "li_equipe_" + i;
         containerEquipes.appendChild(liEquipe);
 
-        const ulEquipe = document.createElement("ul");
-        ulEquipe.id = "ul_equipe_" + i;
-        liEquipe.appendChild(ulEquipe);
-
         const nomeEquipe = document.createElement("h3");
         nomeEquipe.classList.add("nome_equipe");
         nomeEquipe.innerText = "Equipe " + i;
         nomeEquipe.id = "nome_equipe_" + i;
         liEquipe.appendChild(nomeEquipe);
 
+        const olEquipe = document.createElement("ol");
+        olEquipe.id = "ol_equipe_" + i;
+        olEquipe.classList.add("ol_membros_equipe");
+        liEquipe.appendChild(olEquipe);
+        
+        const btnActionsContainer = document.createElement("div");
+        btnActionsContainer.classList.add("btn_actions_container");
+        liEquipe.appendChild(btnActionsContainer);
+        
         const btnEditarEquipe = document.createElement("button");
-        btnEditarEquipe.innerText = "Editar";
+        // btnEditarEquipe.innerText = "Editar";
+        const imgBtnEditar = document.createElement("img");
+        imgBtnEditar.src = "../assets/img/icons/lapis-editar.png";
+        btnEditarEquipe.appendChild(imgBtnEditar);
         btnEditarEquipe.classList.add("btn_editar_equipe");
         btnEditarEquipe.id = "btn_editar_equipe_" + i;
-        liEquipe.appendChild(btnEditarEquipe);
-
+        btnActionsContainer.appendChild(btnEditarEquipe);
+        
         const btnExcluirEquipe = document.createElement("button");
-        btnExcluirEquipe.innerText = "Excluir";
+        const imgBtnExcluir = document.createElement("img");
+        imgBtnExcluir.src = "../assets/img/icons/lata-de-lixo.png";
+        btnExcluirEquipe.appendChild(imgBtnExcluir);
+        // btnExcluirEquipe.innerText = "Excluir";
         btnExcluirEquipe.classList.add("btn_excluir_equipe");
         btnExcluirEquipe.id = "btn_excluir_equipe_" + i;
-        liEquipe.appendChild(btnExcluirEquipe);
+        btnActionsContainer.appendChild(btnExcluirEquipe);
+
+        quantidadeEquipesSpan.innerText = quantidadeEquipes;
     }
 }
 
@@ -118,6 +144,8 @@ function abrirMenuEdicaoEquipe(idEquipe) {
 
 function excluirEquipe(idEquipe) {
     document.getElementById("li_equipe_" + idEquipe).remove();
+
+    quantidadeEquipesSpan.innerText = quantidadeEquipesSpan.innerText - 1
 }
 
 function mudarCorDaEquipe() {
@@ -164,13 +192,14 @@ function definirEquipes() {
     const participantesSorteados = [];
 
     for(i = 1; i <= quantidadeEquipes; i++){
-        const ulEquipe = document.getElementById("ul_equipe_" + i);
+        const olEquipe = document.getElementById("ol_equipe_" + i);
         for(index = quantidadeParticipantesPorEquipe * (i - 1); index < indicesIniciais; index++){
             const liNome = document.createElement("li");
+            liNome.classList.add("li_membros_equipe");
             const resultado = participantesParaSorteio[Math.round(index)];
             if(!participantesSorteados.includes(resultado) && resultado != undefined){
                 liNome.innerText = resultado;
-                ulEquipe.appendChild(liNome);                                                         
+                olEquipe.appendChild(liNome);                                                         
             }
             participantesSorteados.push(resultado);
             // console.log(liNome);
