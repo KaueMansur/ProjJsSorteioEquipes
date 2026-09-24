@@ -8,7 +8,7 @@
 
 > Um site simples e intuitivo para sortear equipes de forma rápida.
 
-🎯 **[Clique aqui para testar a versão online!](https://sorteioEquipes.vercel.app/)**
+🎯 **[Clique aqui para testar a versão online!](https://sorteioequipes.vercel.app/)**
 
 ---
 
