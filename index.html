@@ -12,42 +12,50 @@
     <h1>Sorteio de equipes</h1>
     <section class="section">
         <!-- <article> -->
-            <div class="input_container">
-                <label for="nome_participante" class="label_campo">Nome do participante:</label>
-                <input type="text" id="nome_participante" class="campo_txt">
-                <button id="btn_adicionar_participante" class="btn_azul">Adicionar participante</button>
-            </div>
-            <div class="input_container">
-                <label for="limite_participantes" class="label_campo">Limite de participantes:</label>
-                <input type="number" id="limite_participantes" class="campo_txt" disabled>
+        <div class="input_container">
+            <label for="nome_participante" class="label_campo">Nome do participante:</label>
+            <input type="text" id="nome_participante" class="campo_txt">
+            <button id="btn_adicionar_participante" class="btn_azul"><div class="span_btn_add"></div> <span class="span_btn_adicionar">Adicionar</span> <span class="span_btn_participante"> participante</span></button>
+        </div>
+        <div class="input_container">
+            <label for="limite_participantes" class="label_campo">Limite de participantes:</label>
+            <input type="number" id="limite_participantes" min="1" class="campo_txt input_number" disabled>
+            <div class="div_habilitar_limite">
                 <input type="checkbox" id="limite_participantes_checkbox">
                 <label for="limite_participantes_checkbox" class="label_campo">Habilitar limite</label>
             </div>
+        </div>
         <!-- </article> -->
         <div class="input_container">
             <label for="quantidade_equipes" class="label_campo">Quantidade de equipes:</label>
-            <input type="number" id="quantidade_equipes" class="campo_txt">
+            <input type="number" id="quantidade_equipes" min="1" class="campo_txt input_number">
             <button id="btn_sortear" class="btn_azul">Sortear</button>
             <button id="btn_definir_configuracoes_equipe" class="btn_cinza">Criar equipes</button>
         </div>
     </section>
-    
+
     <section class="section">
         <h2>Participantes Adicionados (<span id="quantidade_participantes">0</span>)</h2>
         <ul id="lista_participantes"></ul>
     </section>
 
     <section class="section">
-        <h2>Equipes(<span id="quantidade_equipes_span">0</span>)</h2>
-        <ul id="container_equipes" style="display: flex; flex-wrap: wrap;"></ul>
+        <h2>Equipes (<span id="quantidade_equipes_span">0</span>)</h2>
+        <div class="participantes_equipe_container">
+            <ul id="container_equipes" style="display: flex; flex-wrap: wrap;"></ul>
+        </div>
     </section>
-        <!-- <label for="quantidade_participantes_por_equipe">Quantidade participantes por equipe:</label> -->
-        <!-- <input type="number" id="quantidade_participantes_por_equipe"> -->
+    <!-- <label for="quantidade_participantes_por_equipe">Quantidade participantes por equipe:</label> -->
+    <!-- <input type="number" id="quantidade_participantes_por_equipe"> -->
     <article id="menu_edicao_equipe" class="desativado">
-        <input type="color" id="input_cor_equipe_em_edicao">
         <input type="text" id="nome_equipe_em_edicao" class="campo_txt">
-        <ul id="ul_partcipantes_equipe_em_edicao"></ul>
-        <button id="btn_salvar_edicao">Salvar</button>
+        <div class="participantes_equipe_container">
+            <ol id="ol_partcipantes_equipe_edicao"></ol>
+        </div>
+        <div class="btns_container">
+            <button id="btn_salvar_edicao" class="btn_azul btn_edicao_equipe">Salvar</button>
+            <button id="btn_cancelar_edicao" class="btn_cinza btn_edicao_equipe" style="border: 1px solid #000;">Cancelar</button>
+        </div>
     </article>
     <script src="assets/js/script.js"></script>
 </body>

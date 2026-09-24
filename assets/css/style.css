@@ -8,13 +8,16 @@
 }
 
 html {
-    padding: 40px 250px;
+    /* padding: 40px 250px; */
+    padding-top: 40px;
 }
 
-body{
+body {
     display: flex;
     flex-direction: column;
-    gap: 30px;   
+    align-items: center;
+    gap: 30px;
+    /* width: 100vw; */
 }
 
 h1 {
@@ -25,7 +28,7 @@ h1 {
     color: #27313d;
 }
 
-h2{
+h2 {
     font-family: "inter", sans-serif;
     font-size: 1.3em;
     font-weight: 500;
@@ -35,22 +38,12 @@ h2{
     border-bottom: 1px solid #e4e5e8;
 }
 
-#menu_edicao_equipe {
-    width: 300px;
-    height: 400px;
-    border: 2px solid #000;
-    background-color: #ddc6aa;
-    position: absolute;
-    left: calc(50% - 150px);
-    top: calc(50% - 200px);
-}
-
 .label_campo {
     font-family: "inter", sans-serif;
     /* font-weight: 600; */
     font-size: 1.3em;
     font-family: "inter", sans-serif;
-    width:227px;
+    width: 227px;
 }
 
 .campo_txt {
@@ -60,15 +53,23 @@ h2{
     /* background-color: #eeeaea; */
     font-family: "inter", sans-serif;
     /* box-shadow: 1px 1px 10px #0001; */
+    /* height: 32px; */
     box-shadow: -1px 2px 5px #0003;
     font-size: 1.1em;
     flex-grow: 1;
 }
 
-.section{
+#nome_equipe_em_edicao {
+    flex-grow: 0;
+    text-align: center;
+    font-weight: 700;
+}
+
+.section {
     display: flex;
     flex-direction: column;
     /* width: fit-content   ; */
+    width: 70%;
     gap: 20px;
     background-color: #f6f7f9;
     border: 1px solid #e4e5e8;
@@ -77,99 +78,110 @@ h2{
     min-height: 200px;
 }
 
-.input_container{
+.input_container {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.btn_azul{
+.btn_azul {
     background-color: #034eab;
     color: #fff;
     font-family: "inter", sans-serif;
     padding: 10px 20px;
     border-radius: 10px;
-    font-size: 1.1em;
+    font-size: 1em;
+    cursor: pointer;
 }
 
-.btn_cinza{
+.btn_cinza {
     background-color: #dedfe3;
     font-family: "inter", sans-serif;
     padding: 10px 50px;
     border-radius: 10px;
-    font-size: 1.1em;
+    font-size: 1em;
+    cursor: pointer;
 }
 
-#limite_participantes_checkbox{
+#limite_participantes_checkbox {
     width: 20px;
     height: 20px;
 }
 
-input:disabled{
+input:disabled {
     cursor: no-drop;
 }
 
-#lista_participantes{
+#lista_participantes {
     display: flex;
     flex-wrap: wrap;
     /* justify-content: space-between; */
-    gap: 10px;
+    gap: 5px;
 }
 
-.participante_li{
+.participante_li {
     font-family: "Inter", sans-serif;
     font-size: 1.1em;
     background-color: #fff;
     padding: 10px;
     border-radius: 5px;
     /* border: 1px solid #000; */
-    width: 212px;
+    /* width: clamp(150px, 212px, 300px); */
     box-shadow: 1px 1px 3px #0005;
     display: flex;
+    /* flex-basis: 200px; */
+    /* flex-grow: 1; */
+    flex: 0 0 calc(25% - (5px * 3 / 4));
     justify-content: space-between;
     align-items: center;
+    /* min-width: 212px; */
 }
 
-.btn_excluir_participante{
+.btn_excluir_participante {
     background-color: #f00;
     padding: 3px;
     border-radius: 3px;
     cursor: pointer;
 }
 
-.btn_excluir_participante img{
+.btn_excluir_participante img {
     width: 20px;
 }
 
-#container_equipes{
+#container_equipes {
     display: flex;
-    gap: 50px;
+    gap: 28.25px;
 }
 
 .li_equipe {
     list-style-type: none;
-    width: 150px;
-    height: 200px;
-    /* background-color: #fff; */
-    /* border: 2px solid #000; */
-    /* background-color: #0002; */
+    /* width: 150px; */
+    min-height: 200px;
     display: flex;
+    flex: 0 0 calc(20% - (28.25px * 4 / 5));
     flex-direction: column;
     justify-content: space-between;
-    background-color: #0001;
+    background-color: #e6e7e8;
     box-shadow: 1px 1px 3px #000;
     border-radius: 10px;
     padding: 10px;
 }
 
-.nome_equipe{
+.nome_equipe {
     font-family: "inter", sans-serif;
     text-align: center;
     border-bottom: 1px solid #636060;
     padding-bottom: 5px;
 }
 
-.ol_membros_equipe{
+.participantes_equipe_container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.ol_membros_equipe {
     display: flex;
     flex-direction: column;
     padding: 0 3px;
@@ -177,7 +189,7 @@ input:disabled{
     /* gap: 10px; */
 }
 
-.li_membros_equipe{
+.li_membros_equipe {
     font-family: "inter", sans-serif;
     padding: 5px;
     /* border-top: 1px solid #b1b3b9; */
@@ -185,38 +197,286 @@ input:disabled{
     list-style-position: inside;
 }
 
-.li_membros_equipe:last-child{
+.li_membros_equipe:last-child {
     border-bottom: 0;
 }
 
-.li_membros_equipe::marker{
+.li_membros_equipe::marker {
     font-weight: bold;
     border-bottom: 1px solid #b1b3b9;
 }
 
-.btn_editar_equipe{
+.btn_editar_equipe {
     background-color: #034eab;
     border-radius: 3px;
     padding: 5px;
     box-shadow: 1px 1px 3px #000;
+    cursor: pointer;
 }
 
-.btn_editar_equipe img, .btn_excluir_equipe img{
+.btn_editar_equipe img,
+.btn_excluir_equipe img {
     width: 15px;
 }
 
-.btn_excluir_equipe{
+.btn_excluir_equipe {
     background-color: #be2727;
     border-radius: 3px;
     padding: 5px;
     box-shadow: 1px 1px 3px #000;
+    cursor: pointer;
 }
 
-.btn_actions_container{
+.btn_actions_container {
     display: flex;
     justify-content: space-between;
 }
 
-.desativado {
+#menu_edicao_equipe {
+    width: 300px;
+    height: 400px;
+    border: 2px solid #000;
+    /* background-color: #ddc6aa; */
+    background-color: #e6e7e8;
+    position: fixed;
+    left: calc(50% - 150px);
+    top: calc(50% - 200px);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    box-shadow: 3px 5px 10px #0006;
+}
+
+.btn_edicao_equipe {
+    padding: 10px 0;
+    flex-grow: 1;
+}
+
+.btns_container {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+#ol_partcipantes_equipe_edicao {
+    width: 100%;
+    max-height: 230px;
+    overflow-y: auto;
+}
+
+.input_number {
+    width: 100px;
+    flex-grow: 0;
+    text-align: center;
+}
+
+.span_btn_add {
     display: none;
+    background-color: #fff;
+    width: 15px;
+    height: 2px;
+    position: relative;
+}
+
+.span_btn_add::after {
+    content: "";
+    position: absolute;
+    background-color: #fff;
+    width: 15px;
+    height: 2px;
+    display: block;
+    transform: rotate(90deg);
+    top: 0;
+}
+
+.div_habilitar_limite{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.desativado {
+    display: none !important;
+}
+
+@media screen and (max-width: 1144px){
+    .li_membros_equipe{
+        font-size: .9em;
+    }
+}
+
+@media screen and (max-width: 1105px) {
+    .btn_azul,
+    .btn_cinza {
+        font-size: .9em;
+    }
+}
+
+@media screen and (max-width: 1084px) {
+    .label_campo {
+        font-size: 1.1em;
+        width: 195px;
+    }
+
+    .section {
+        width: 80%;
+    }
+
+    #container_equipes {
+        gap: 15px;
+    }
+
+    .li_equipe {
+        flex: 0 0 calc(20% - (15px * 4 / 5));
+    }
+}
+
+@media screen and (max-width: 909px) {
+    .span_btn_participante {
+        display: none;
+    }
+
+    .participante_li {
+        flex: 0 0 calc(33.33% - (5px * 2 / 3));
+        font-size: 0.9em;
+    }
+
+}
+
+@media screen and (max-width: 835px) {
+    .btn_cinza {
+        padding: 10px 20px;
+    }
+
+    .section {
+        width: 90%;
+    }
+
+    .li_equipe {
+        flex: 0 0 calc(25% - (15px * 3 / 4));
+    }
+}
+
+@media screen and (max-width: 730px) {
+    .span_btn_adicionar {
+        display: none;
+    }
+
+    .span_btn_add,
+    .span_btn_add::after {
+        display: block;
+    }
+
+    #btn_adicionar_participante {
+        height: 36px;
+    }
+
+    .label_campo {
+        font-size: .9em;
+        width: 153px;
+    }
+
+    .campo_txt {
+        border-radius: 5px;
+        padding: 5px;
+    }
+
+    .input_number {
+        width: 50px;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    #container_equipes {
+        gap: 10px;
+    }
+
+    .li_equipe{
+        flex: 0 0 calc(33.33% - (10px * 2 / 3));
+    }
+
+    .nome_equipe{
+        font-size: .9em;
+    }
+
+    .btn_editar_equipe img{
+        width: 10px;
+    }
+
+    .btn_excluir_equipe img{
+        width: 10px;
+    }
+}
+
+@media screen and (max-width: 565px) {
+    .input_container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .span_btn_participante {
+        display: block;
+    }
+
+    .span_btn_adicionar {
+        display: block;
+    }
+
+    .span_btn_add,
+    .span_btn_add::after {
+        display: none;
+    }
+
+    .btn_azul {
+        /* width: 100%; */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .div_habilitar_limite {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        justify-content: center;
+        order: -1;
+    }
+
+    .label_campo {
+        width: fit-content;
+    }
+
+    #btn_adicionar_participante {
+        display: flex;
+        gap: 5px;
+    }
+
+    .participante_li {
+        font-size: .7em;
+        padding: 5px;
+    }
+
+    .btn_excluir_participante img {
+        width: 10px;
+    }
+}
+
+@media screen and (max-width: 460px){
+    .li_membros_equipe{
+        font-size: .8em;
+    }
+}
+
+@media screen and (max-width: 430px) {
+    .participante_li {
+        flex: 0 0 calc(50% - (5px * 1 / 2));
+    }
+
+    .li_equipe{
+        flex: 0 0 calc(50% - (10px * 1 / 2));
+    }
 }

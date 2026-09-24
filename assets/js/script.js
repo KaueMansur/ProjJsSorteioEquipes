@@ -19,10 +19,14 @@ const menuEdicaoEquipe = document.getElementById("menu_edicao_equipe");
 const nomeEquipeEdicao = document.getElementById("nome_equipe_em_edicao");
 const corEquipeEdicaoInput = document.getElementById("input_cor_equipe_em_edicao");
 const btnSalvarEdicao = document.getElementById("btn_salvar_edicao");
+const btnCancelarEdicao = document.getElementById("btn_cancelar_edicao");
+
+const olParticipantesEquipeEdicao = document.getElementById("ol_partcipantes_equipe_edicao");
 
 const btnSortear = document.getElementById("btn_sortear");
 
-const participantes = ["Kauê", "Bruno", "Son", "Luiz", "Shark", "Nemex"];
+// const participantes = ["Kauê", "Bruno", "Son", "Luiz", "Shark", "Nemex", "Begalo", "bibi", "Rodrigo", "Jay", "Nya", "Kai", "Lloyd", "wu"];
+const participantes = [];
 const idsParticipantes = [];
 let participantesParaSorteio = [];
 
@@ -40,6 +44,8 @@ function definirConfiguracoesDeEquipe() {
 function adicionarParticipante() {
     if (limiteParticipanteCheckbox.checked) {
         limiteParticipantes = limiteParticipantesInput.value;
+    } else{
+        limiteParticipantes = null;
     }
     if (participantes.length < limiteParticipantes || limiteParticipantes == null) {
         idAtual++;
@@ -71,7 +77,10 @@ function adicionarParticipante() {
         // console.log(participantes);
         // console.log(idsParticipantes);
     } else {
-        // console.log("Limite de participantes atingido!");
+        alert("Limite de participantes atingido!");
+        nomeParticipanteInput.value = "";
+        nomeParticipanteInput.focus();
+
     }
 }
 
@@ -91,6 +100,11 @@ function excluirParticipante(idParticipante) {
 }
 
 function definirQuantidadeEquipes() {
+    const liEquipe = document.querySelectorAll(".li_equipe");
+    liEquipe.forEach((li) => {
+        li.remove();
+    })
+
     quantidadeEquipes = quantidadeEquipesInput.value;
     for (let i = 1; quantidadeEquipes >= i; i++) {
         const liEquipe = document.createElement("li");
@@ -108,11 +122,11 @@ function definirQuantidadeEquipes() {
         olEquipe.id = "ol_equipe_" + i;
         olEquipe.classList.add("ol_membros_equipe");
         liEquipe.appendChild(olEquipe);
-        
+
         const btnActionsContainer = document.createElement("div");
         btnActionsContainer.classList.add("btn_actions_container");
         liEquipe.appendChild(btnActionsContainer);
-        
+
         const btnEditarEquipe = document.createElement("button");
         // btnEditarEquipe.innerText = "Editar";
         const imgBtnEditar = document.createElement("img");
@@ -121,7 +135,7 @@ function definirQuantidadeEquipes() {
         btnEditarEquipe.classList.add("btn_editar_equipe");
         btnEditarEquipe.id = "btn_editar_equipe_" + i;
         btnActionsContainer.appendChild(btnEditarEquipe);
-        
+
         const btnExcluirEquipe = document.createElement("button");
         const imgBtnExcluir = document.createElement("img");
         imgBtnExcluir.src = "../assets/img/icons/lata-de-lixo.png";
@@ -138,27 +152,56 @@ function definirQuantidadeEquipes() {
 function abrirMenuEdicaoEquipe(idEquipe) {
     menuEdicaoEquipe.classList.remove("desativado");
     menuEdicaoEquipe.name = "menu_edicao_" + idEquipe;
+    // corEquipeEdicaoInput.value = menuEdicaoEquipe.style.backgroundColor;
 
     nomeEquipeEdicao.value = document.getElementById("nome_equipe_" + idEquipe).innerText;
+
+    const lisParticipantesEquipes = document.getElementById("ol_equipe_" + idEquipe).children;
+
+    for (const li of lisParticipantesEquipes) {
+        const liParticipante = document.createElement("li");
+        liParticipante.innerText = li.textContent;
+        liParticipante.classList.add("li_membros_equipe");
+        olParticipantesEquipeEdicao.appendChild(liParticipante);
+    }
 }
 
 function excluirEquipe(idEquipe) {
     document.getElementById("li_equipe_" + idEquipe).remove();
 
-    quantidadeEquipesSpan.innerText = quantidadeEquipesSpan.innerText - 1
-}
+    quantidadeEquipesSpan.innerText = quantidadeEquipesSpan.innerText - 1;
 
-function mudarCorDaEquipe() {
-    menuEdicaoEquipe.style.backgroundColor = corEquipeEdicaoInput.value;
+    document.querySelectorAll(".li_equipe").forEach((li, i) => {
+        const index = i + 1;
+
+        li.id = `li_equipe_${index}`;
+
+        // Busca os elementos apenas DENTRO deste item da equipe
+        li.querySelector(".btn_editar_equipe")?.setAttribute("id", `btn_editar_equipe_${index}`);
+        li.querySelector(".btn_excluir_equipe")?.setAttribute("id", `btn_excluir_equipe_${index}`);
+        li.querySelector(".ol_membros_equipe")?.setAttribute("id", `ol_equipe_${index}`);
+        li.querySelector(".nome_equipe")?.setAttribute("id", `nome_equipe_${index}`);
+    });
+    quantidadeEquipes--;
 }
 
 function salvarEdicao() {
     const idEquipe = menuEdicaoEquipe.name.substring(12);
 
     document.getElementById("nome_equipe_" + idEquipe).innerText = nomeEquipeEdicao.value;
-    document.getElementById("li_equipe_" + idEquipe).style.backgroundColor = corEquipeEdicaoInput.value;
+    // document.getElementById("li_equipe_" + idEquipe).style.backgroundColor = corEquipeEdicaoInput.value;
 
     menuEdicaoEquipe.classList.add("desativado");
+}
+
+function cancelarEdicao() {
+    menuEdicaoEquipe.classList.add("desativado");
+
+    const lisParticipantesEquipe = olParticipantesEquipeEdicao.children;
+
+    for (const li of lisParticipantesEquipe) {
+        li.remove();
+    }
 }
 
 function sortearArray() {
@@ -185,21 +228,30 @@ function sortearArray() {
 function definirEquipes() {
     const quantidadeParticipantes = participantesParaSorteio.length;
 
+    // console.log(quantidadeEquipes)
+
     const quantidadeParticipantesPorEquipe = quantidadeParticipantes / quantidadeEquipes;
 
     let indicesIniciais = quantidadeParticipantesPorEquipe;
 
     const participantesSorteados = [];
 
-    for(i = 1; i <= quantidadeEquipes; i++){
+    const liMembrosEquipe = document.querySelectorAll(".li_membros_equipe");
+
+    liMembrosEquipe.forEach((li) => {
+        li.remove();
+    })
+
+    for (i = 1; i <= quantidadeEquipes; i++) {
         const olEquipe = document.getElementById("ol_equipe_" + i);
-        for(index = quantidadeParticipantesPorEquipe * (i - 1); index < indicesIniciais; index++){
+        for (index = quantidadeParticipantesPorEquipe * (i - 1); index < indicesIniciais; index++) {
             const liNome = document.createElement("li");
             liNome.classList.add("li_membros_equipe");
             const resultado = participantesParaSorteio[Math.round(index)];
-            if(!participantesSorteados.includes(resultado) && resultado != undefined){
+            if (!participantesSorteados.includes(resultado) && resultado != undefined) {
                 liNome.innerText = resultado;
-                olEquipe.appendChild(liNome);                                                         
+                console.log(olEquipe)
+                olEquipe.appendChild(liNome);
             }
             participantesSorteados.push(resultado);
             // console.log(liNome);
@@ -221,29 +273,34 @@ limiteParticipanteCheckbox.addEventListener("click", () => {
 });
 
 containerEquipes.addEventListener("click", (event) => {
-    if (event.target && event.target.classList.contains("btn_editar_equipe")) {
-        const idBtn = event.target.id;
+    const btn = event.target.closest(".btn_editar_equipe");
+    console.log(btn)
+    if (event.target && btn) {
+        const idBtn = btn.id;
+        console.log(idBtn);
         abrirMenuEdicaoEquipe(idBtn.substring(18));
     }
 });
 
 containerEquipes.addEventListener("click", (event) => {
-    if (event.target && event.target.classList.contains("btn_excluir_equipe")) {
-        const idBtn = event.target.id;
+    const btn = event.target.closest(".btn_excluir_equipe");
+    if (event.target && btn) {
+        const idBtn = btn.id;
         excluirEquipe(idBtn.substring(19));
     }
 });
 
 listaParticipante.addEventListener("click", (event) => {
-    if (event.target && event.target.classList.contains("btn_excluir_participante")) {
-        const idBtn = event.target.id;
+    const btn = event.target.closest(".btn_excluir_participante");
+    if (event.target && btn) {
+        const idBtn = btn.id;
         // console.log(idBtn.substring(25))
         excluirParticipante(idBtn.substring(25));
     }
 });
 
-corEquipeEdicaoInput.addEventListener("change", mudarCorDaEquipe);
+// corEquipeEdicaoInput.addEventListener("change", mudarCorDaEquipe);
 
 btnSalvarEdicao.addEventListener("click", salvarEdicao);
-
+btnCancelarEdicao.addEventListener("click", cancelarEdicao);
 btnSortear.addEventListener("click", sortearArray);
