@@ -44,7 +44,7 @@ function definirConfiguracoesDeEquipe() {
 function adicionarParticipante() {
     if (limiteParticipanteCheckbox.checked) {
         limiteParticipantes = limiteParticipantesInput.value;
-    } else{
+    } else {
         limiteParticipantes = null;
     }
     if (participantes.length < limiteParticipantes || limiteParticipantes == null) {
@@ -192,6 +192,12 @@ function salvarEdicao() {
     // document.getElementById("li_equipe_" + idEquipe).style.backgroundColor = corEquipeEdicaoInput.value;
 
     menuEdicaoEquipe.classList.add("desativado");
+
+    const lisParticipantesEquipe = olParticipantesEquipeEdicao.children;
+
+    for (const li of lisParticipantesEquipe) {
+        li.remove();
+    }
 }
 
 function cancelarEdicao() {
